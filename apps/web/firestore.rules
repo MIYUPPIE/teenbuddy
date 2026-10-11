@@ -1,0 +1,56 @@
+rules_version = '2';
+
+// TeenBuddy Firestore rules.
+//
+// One principle, enforced structurally: a teenager's data is readable and
+// writable by exactly one account, their own. There is no admin path, no
+// parent path, and no support path in these rules. Anyone who needs to see a
+// teen's data has to be given it by the teen, through the app, as a
+// SupportRequest carrying only the message they chose to write.
+//
+// Everything lives under /users/{userId}/..., so ownership is one condition at
+// the top rather than a check repeated on every collection - and a collection
+// added later inherits the deny-by-default at the bottom rather than silently
+// shipping open.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // Fields the client must never be trusted to change after creation.
+    function ownsPayload(userId) {
+      return request.resource.data.userId == userId;
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId) && ownsPayload(userId);
+      allow delete: if isOwner(userId);
+
+      // Mood check-ins, journal, completions, help sessions, trusted people.
+      // Journal entries are the most sensitive documents in the product and get
+      // no special case here on purpose: the blanket owner-only rule already
+      // gives them the strongest protection the rules language can express.
+      match /{collection}/{docId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && ownsPayload(userId);
+        // Immutable by default. Nothing in the product edits a check-in or a
+        // completion after the fact, and an update path is an attack surface
+        // for no feature.
+        allow update: if isOwner(userId)
+                      && ownsPayload(userId)
+                      && collection in ['journal', 'trusted', 'support'];
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // Deny everything not matched above. New collections are closed until
+    // someone writes a rule for them, rather than open until someone notices.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

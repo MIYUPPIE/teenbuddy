@@ -1,0 +1,10 @@
+{
+  "name": "@teenbuddy/progress",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Streaks, growth pillars and achievements. Pure functions over counts. No IO, no clock, no randomness.",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@teenbuddy/contracts": "*" },
+  "scripts": { "test": "node --test" }
+}

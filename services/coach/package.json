@@ -1,0 +1,19 @@
+{
+  "name": "@teenbuddy/coach",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The Teen Support Coach. Orchestrates a model inside the safety rails and never lets it author a crisis reply.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@teenbuddy/contracts": "*",
+    "@teenbuddy/safety": "*",
+    "@teenbuddy/llm": "*"
+  },
+  "scripts": {
+    "test": "node --test",
+    "eval": "node evals/run.ts"
+  }
+}

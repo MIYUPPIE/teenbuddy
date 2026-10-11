@@ -1,0 +1,13 @@
+{
+  "name": "@teenbuddy/llm",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The only place in the tree that talks to a language model. Shells out to the local Claude Code CLI.",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@teenbuddy/contracts": "*" },
+  "scripts": {
+    "test": "node --test",
+    "eval": "node evals/run.ts"
+  }
+}

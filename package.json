@@ -1,0 +1,20 @@
+{
+  "name": "teenbuddy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A safe daily companion for teenagers: emotions, healthy habits, resisting impulses, and a bridge to real human help.",
+  "engines": { "node": ">=22.6.0" },
+  "workspaces": [
+    "contracts",
+    "services/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "gate": "bash scripts/gate.sh",
+    "eval": "bash scripts/eval.sh",
+    "test": "bash scripts/gate.sh",
+    "dev": "npm run dev --workspace @teenbuddy/web",
+    "build": "npm run build --workspace @teenbuddy/web"
+  }
+}

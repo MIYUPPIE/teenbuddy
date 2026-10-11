@@ -1,0 +1,10 @@
+{
+  "name": "@teenbuddy/content",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The lesson library, the daily challenge rotation, and the Help Now interventions. Static data plus deterministic selection.",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@teenbuddy/contracts": "*" },
+  "scripts": { "test": "node --test" }
+}

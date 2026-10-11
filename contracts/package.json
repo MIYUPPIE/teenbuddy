@@ -1,0 +1,13 @@
+{
+  "name": "@teenbuddy/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Versioned schemas and types shared across every TeenBuddy service. The only thing services import from each other.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}
